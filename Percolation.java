@@ -18,7 +18,10 @@ public class Percolation {
         sitesWithoutVirtual = new WeightedQuickUnionUF(n * n + 1);
         virtualTop = 0;
         virtualBottom = n * n + 1;
-        for (int i = 1; i <= n; i++) sites.union(virtualTop, i); sitesWithoutVirtual(virtualTop, i);
+        for (int i = 1; i <= n; i++) {
+            sites.union(virtualTop, i);
+            sitesWithoutVirtual.union(virtualTop, i);
+        }
         for (int i = n * n - n + 1; i < virtualBottom; i++) sites.union(virtualBottom, i);
         open = new boolean[n * n + 2];
         for (int i = 0; i < n * n + 2; i++) open[i] = false;
@@ -66,7 +69,7 @@ public class Percolation {
 
     public boolean percolates() {
         return sites.connected(virtualTop, virtualBottom);
-    }              // does the system percolate?
+    }
 
     private int encodeCoordinates(int i, int j) {
         return scale * (i - 1) + j;
